@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log/slog"
 	"net/http"
 
 	"github.com/ZelenyMK/golang-rest-api-test-task/api"
@@ -11,7 +11,7 @@ import (
 func main() {
 	var router *chi.Mux = chi.NewRouter()
 
-	fmt.Println("Starting API")
+	slog.Info("Starting API")
 
 	router.Post("/products", api.CreateProduct)
 	router.Get("/products/{id}", api.GetProduct)
@@ -21,7 +21,7 @@ func main() {
 
 	err := http.ListenAndServe("localhost:8080", router)
 	if err != nil {
-		fmt.Printf("err: %v\n", err)
+		slog.Error("bad thing happened", "error", err)
 	}
 
 }

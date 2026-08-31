@@ -2,7 +2,7 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
+	"log/slog"
 	"net/http"
 	"strconv"
 
@@ -16,7 +16,7 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 	var p Product
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
-		fmt.Printf("err: %v\n", err)
+		slog.Error("bad thing happened", "error", err)
 		return
 	}
 
@@ -27,7 +27,7 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(p)
 
-	fmt.Printf("Product with id: %v created\n", p.ID)
+	slog.Info("Product created\n")
 }
 
 func GetProduct(w http.ResponseWriter, r *http.Request) {
@@ -35,21 +35,19 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	idNum, err := strconv.Atoi(idStr)
 	if err != nil {
-		fmt.Printf("err: %v\n", err)
+		slog.Error("bad thing happened", "error", err)
 		return
 	}
 
 	p := products[idNum]
 	json.NewEncoder(w).Encode(p)
-
-	fmt.Printf("%v\n", p)
 }
 
 func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	idNum, err1 := strconv.Atoi(idStr)
 	if err1 != nil {
-		fmt.Printf("err: %v\n", err1)
+		slog.Error("bad thing happened", "error", err1)
 		return
 	}
 
@@ -57,27 +55,28 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 
 	err2 := json.NewDecoder(r.Body).Decode(&newP)
 	if err2 != nil {
-		fmt.Printf("err: %v\n", err2)
+		slog.Error("bad thing happened", "error", err2)
 		return
 	}
 
 	products[idNum] = newP
-	fmt.Printf("Product with id: %v was updated", idNum)
+	slog.Info("Product was updated")
 }
 
 func DeleteProduct(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
-	idNum, err1 := strconv.Atoi(idStr)
-	if err1 != nil {
-		fmt.Printf("err: %v\n", err1)
+	idNum, err := strconv.Atoi(idStr)
+	if err != nil {
+		slog.Error("bad thing happened", "error", err)
 		return
 	}
 
 	delete(products, idNum)
 
-	fmt.Printf("Product with id: %v was deleted", idNum)
+	slog.Info("Product with deleted")
 }
 
 func GetProducts(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(products)
+	slog.Info("Got products\n")
 }
