@@ -5,10 +5,10 @@ import (
 )
 
 type Product struct {
-	id          int
-	name        string
-	description string
-	price       float64
-	category    string
-	created_at  time.Time
+	ID          int       `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Price       float64   `json:"price"`
+	Category    string    `json:"category"`
+	Created_at  time.Time `json:"created_at"`
 }
