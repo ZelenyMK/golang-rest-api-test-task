@@ -1,2 +1,17 @@
-# golang-rest-api-test-task
-A test task for a Junior backend-developer position
+# Тестовое задание по разработке REST API на Go
+## Как запустить?
+В директории проекта:
+```
+go run cmd/test-task/main.go
+```
+## Как запустить тесты?
+В директории проекта:
+```
+go test ./test/
+```
+##Зависимости:
+go-sqlite3, chi
+##ToDo
+- Горутины
+- Покрыть больше кода тестами
+- Docker-compose для поднятия сервиса + БД
