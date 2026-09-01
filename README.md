@@ -9,8 +9,10 @@ go run cmd/test-task/main.go
 ```
 go test ./test/
 ```
+
 ##Зависимости:
 go-sqlite3, chi
+
 ##ToDo
 - Горутины
 - Покрыть больше кода тестами
